@@ -3,9 +3,7 @@
   import Card from './Card.svelte';
   import Button from './Button.svelte';
   import RatingSelect from './RatingSelect.svelte';
-  import { createEventDispatcher } from 'svelte';
-
-  const dispatch = createEventDispatcher();
+  import { FeedbackStore } from '../stores';
 
   let text = '';
   let rating = 10;
@@ -32,7 +30,7 @@
   const handleSubmit = () => {
     if (text.trim().length >= min) {
       const newFeedback = { id: uuid(), text, rating };
-      dispatch('add-feedback', newFeedback);
+      FeedbackStore.update((items) => [newFeedback, ...items]);
       text = '';
     }
   };
